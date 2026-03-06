@@ -16,6 +16,7 @@ class ProjectController extends AbstractController
     public function __construct()
     {
         $this->projectRepository = new ProjectRepository();
+        $this->validator = new Validator();
     }
 
     public function addProject(): mixed
@@ -26,13 +27,13 @@ class ProjectController extends AbstractController
             if (!empty($_POST['name'])) {
                 $_POST['name'] = Tools::sanitize($_POST['name']);
 
-                $project = new Project($_POST['name']);
+                $project = new Project();
+                $project->setName($_POST['name']);
 
                 if (!$this->projectRepository->isProjectExistsWithName($project->getName())) {
                     $this->projectRepository->saveProject($project);
                     $data['valid'] = "Le projet a été ajouté en BDD";
-                }
-                else {
+                } else {
                     $data['error'] = "Le projet existe déjà en BDD";
                 }
             }
@@ -40,6 +41,4 @@ class ProjectController extends AbstractController
 
         return $this->render("add_project", "Add project", $data);
     }
-
-    
 }

@@ -1,23 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <main>
-        <section>
-            <h2>Ajouter un projet</h2>
-            <form action="" method="post">
-                <label for="name">Nom du projet</label>
-                <input type="text" id="name" name="name" placeholder="Article sur les élections présidentielles">
-                <hr>
-                <button type="submit" id="submit-name-project"></button>
-            </form>
-            <p><?= $data["error"] ?? "" ?></p>
-            <p><?= $data["valid"] ?? "" ?></p>
-        </section>
-    </main>
-</body>
-</html>
+<?php
+
+include 'vendor/autoload.php';
+include 'env.php';
+
+session_start();
+
+$ulr = parse_url($_SERVER['REQUEST_URI']);
+$path = isset($ulr['path']) ? $ulr['path'] : '/';
+
+use App\Controller\ProjectController;
+use App\Controller\HomeController;
+$homeController = new HomeController();
+$projectController = new ProjectController();
+
+switch ($path) {
+    case '/':
+        $homeController->index();
+        break;
+    case '/projects/add':
+        $projectController->addProject();
+        break;
+    default:
+        http_response_code(404);
+        echo "Page not found";
+        break;
+}

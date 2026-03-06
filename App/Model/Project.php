@@ -7,10 +7,7 @@ class Project
     private ?int $id_project;
     private ?string $name;
 
-    public function __construct()
-    {
-        ;
-    }
+    public function __construct() {}
 
     //=============== ID ===============//
     public function getId(): ?int
