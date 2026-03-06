@@ -26,10 +26,9 @@ class ProjectRepository
         try {
             $sql = "INSERT INTO project(`name`) VALUES(?)";
             $req = $this->connect->prepare($sql);
-            $req->bindValue(2, $project->getName(), \PDO::PARAM_STR);
+            $req->bindValue(1, $project->getName(), \PDO::PARAM_STR);
             $req->execute();
-            $id = $this->connect->lastInsertId();
-            $project->setId($id_project);
+
         } catch (\PDOException $pdo) {
             throw new \PDOException("Erreur d'enregistrement en BDD");
         }
@@ -44,7 +43,7 @@ class ProjectRepository
     {
         try {
             //Ecrire la requête
-            $sql = "SELECT id FROM project WHERE `name` = ?";
+            $sql = "SELECT id_project FROM project WHERE `name` = ?";
             //Préparer la requête
             $req = $this->connect->prepare($sql);
             //Assigner le paramètre

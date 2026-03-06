@@ -17,12 +17,12 @@ CREATE TABLE IF NOT EXISTS `account`(
 
 CREATE TABLE IF NOT EXISTS `project`(
     id_project INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    `name` VARCHAR(50) NOT NULL,
+    `name` VARCHAR(50) NOT NULL
 )ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `folder` (
 	id_folder INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    `name` VARCHAR(50) NOT NULL,
+    `name` VARCHAR(50) NOT NULL
 )ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `file` (
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `file` (
     font_style VARCHAR(50),
     font_size INT,
     text_align VARCHAR(50),
-    text_content NVARCHAR(max)
+    text_content TEXT
 )ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `account_project` (
@@ -63,13 +63,13 @@ REFERENCES `account` (id_account)
 ON DELETE CASCADE;
 
 ALTER TABLE `account_project`
-ADD CONSTRAINT fk_watch_project
+ADD CONSTRAINT fk_watch_project_account
 FOREIGN KEY (id_ap_project)
 REFERENCES `project` (id_project)
 ON DELETE CASCADE;
 
 ALTER TABLE `project_folder`
-ADD CONSTRAINT fk_watch_project
+ADD CONSTRAINT fk_watch_project_folder
 FOREIGN KEY (id_pf_project)
 REFERENCES `project` (id_project)
 ON DELETE CASCADE;
@@ -81,7 +81,7 @@ REFERENCES `folder` (id_folder)
 ON DELETE CASCADE;
 
 ALTER TABLE `folder_file`
-ADD CONSTRAINT fk_watch_folder
+ADD CONSTRAINT fk_watch_folder_file
 FOREIGN KEY (id_ff_folder)
 REFERENCES `folder` (id_folder)
 ON DELETE CASCADE;
